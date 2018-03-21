@@ -1,6 +1,7 @@
 package com.jhon.rain.controller;
 
 import com.jhon.rain.common.RestResponse;
+import com.jhon.rain.exception.NodeItemException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,9 @@ public class UserController {
   @RequestMapping("getUsername")
   public RestResponse<String> getUserName(Long id) {
     log.info("In Coming Request!");
+    if (id == null){
+      throw new NodeItemException(NodeItemException.CustomType.WRONG_PAGE,"页面不存在");
+    }
     return RestResponse.success("test-name");
   }
 }
