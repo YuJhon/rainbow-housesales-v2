@@ -525,11 +525,16 @@ public class RestAutoConfig {
     ```
     
 * 结果展示
-    * 整合Logbook日志框架后的API-Gateway项目HTTP调用
+    * 整合Logbook日志框架后的API-Gateway项目HTTP调用(Rest工具)
     ![整合Logbook日志框架后的API-Gateway项目HTTP调用](./photos/8.整合Logbook日志框架后的API-Gateway项目HTTP调用.png)
     * House-User-Service提供的日志记录
     ![House-User-Service提供的日志记录](./photos/11.House-User-Service提供的日志记录.png)
     * House-API-Gateway提供的日志记录
     ![House-API-Gateway提供的日志记录](./photos/12.House-API-Gateway提供的日志记录.png)
+    
+    * 整合Logbook日志框架后的API-Gateway项目Curl工具调用
+    ![House-API-Gateway提供的日志记录（Curl）](./photos/13.House-API-Gateway提供的日志记录（Curl）.png)
+    * House-API-Gateway提供的日志记录
+    ![House-API-Gateway提供的日志记录（Console）](./photos/14.House-API-Gateway提供的日志记录（Console）.png)
         
 * 更新日期：2018-03-21 12:00:00    
