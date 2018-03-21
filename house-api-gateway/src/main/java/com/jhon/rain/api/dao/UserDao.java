@@ -24,9 +24,20 @@ public class UserDao {
   @Value("${user.service.name}")
   private String userServiceName;
 
-  public String getUserNameById(Long id){
-    String url = "http://" + userServiceName + "/user/getUsername?id="+id;
-    RestResponse<String> restResponse =  rest.get(url,new ParameterizedTypeReference<RestResponse<String>>(){}).getBody();
-    return restResponse.getResult();
+  /**
+   * <pre>调用服务</pre>
+   *
+   * @param id 用户id
+   * @return 返回用户名
+   */
+  public String getUserNameById(Long id) {
+    String url = "http://" + userServiceName + "/user/getUsername?id=" + id;
+    RestResponse<String> restResponse = rest.get(url, new ParameterizedTypeReference<RestResponse<String>>() {
+    }).getBody();
+    if (restResponse.getCode() == 0) {
+      return restResponse.getResult();
+    } else {
+      return null;
+    }
   }
 }

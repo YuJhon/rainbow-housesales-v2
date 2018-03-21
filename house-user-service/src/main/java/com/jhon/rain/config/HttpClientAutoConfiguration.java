@@ -1,4 +1,4 @@
-package com.jhon.rain.api.config;
+package com.jhon.rain.config;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;

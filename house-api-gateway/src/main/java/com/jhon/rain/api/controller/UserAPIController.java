@@ -1,6 +1,7 @@
 package com.jhon.rain.api.controller;
 
 import com.jhon.rain.api.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("api/user")
+@Slf4j
 public class UserAPIController {
 
   @Autowired
@@ -21,6 +23,7 @@ public class UserAPIController {
 
   @GetMapping("getUsername/{id}")
   public String getUsername(@PathVariable(name = "id") Long id) {
+    log.info("API-Gateway Controller Request Comming!");
     return userService.getUsername(id);
   }
 }

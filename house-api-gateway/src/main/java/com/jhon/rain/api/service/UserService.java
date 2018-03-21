@@ -2,6 +2,7 @@ package com.jhon.rain.api.service;
 
 import com.jhon.rain.api.dao.UserDao;
 import com.netflix.discovery.converters.Auto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,18 @@ import org.springframework.stereotype.Service;
  * @date 2018/3/20 22:47
  */
 @Service
+@Slf4j
 public class UserService {
 
   @Autowired
   private UserDao userDao;
 
+  /**
+   * <pre>获取用户名</pre>
+   *
+   * @param id 用户id
+   * @return
+   */
   public String getUsername(Long id) {
     return userDao.getUserNameById(id);
   }
