@@ -537,4 +537,22 @@ public class RestAutoConfig {
     * House-API-Gateway提供的日志记录
     ![House-API-Gateway提供的日志记录（Console）](./photos/14.House-API-Gateway提供的日志记录（Console）.png)
         
-* 更新日期：2018-03-21 12:00:00    
+* 更新日期：2018-03-21 12:00:00
+
+## [Spring Cloud Ribbon]负载均衡组件引入
+* Maven依赖(House-API-Gateway)
+    * 【注意】由于Spring-Cloud-Starter-Eureka-Server中已经默认将Ribbon的依赖引入了，所以我们在项目中不需要再次单独将Ribbon的依赖添加到pom文件中。
+    * Starter-Eureka-Server中默认添加了Ribbon的依赖，如下图所示：
+        ![整合Ribbon实现负载均衡（Maven依赖）](./photos/15.整合Ribbon实现负载均衡（Maven依赖）.png)
+        
+* RestTemplate添加@LoadBalanced注解
+![整合Ribbon实现负载均衡（RestTemplate注解）](./photos/16.整合Ribbon实现负载均衡（RestTemplate注解）.png)
+    
+* 模拟请求（每次id不同）
+![模拟客户端的三次请求](./photos/19.模拟客户端的三次请求.png)
+
+* 请求结果展示
+    * House-User-Service 8090实例Console日志
+    ![8090实例的Console日志](./photos/20.用户实例(House-User-Service)8090实例的Console日志.png)
+    * House-User-Service 8091实例console日志
+    ![8091实例的Console日志](./photos/21.用户实例(House-User-Service)8091实例的Console日志.png)
