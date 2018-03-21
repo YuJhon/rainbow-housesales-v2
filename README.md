@@ -556,3 +556,8 @@ public class RestAutoConfig {
     ![8090实例的Console日志](./photos/20.用户实例(House-User-Service)8090实例的Console日志.png)
     * House-User-Service 8091实例console日志
     ![8091实例的Console日志](./photos/21.用户实例(House-User-Service)8091实例的Console日志.png)
+    
+* 如果想使用Ribbon而不依赖于Eureka，则参考一下文档:
+    [spring-cloud-ribbon-without-eureka](http://projects.spring.io/spring-cloud/spring-cloud.html#spring-cloud-ribbon-without-eureka)
+    
+    
