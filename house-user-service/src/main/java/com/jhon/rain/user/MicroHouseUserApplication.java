@@ -1,4 +1,4 @@
-package com.jhon.rain;
+package com.jhon.rain.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.jhon.rain.common;
+package com.jhon.rain.user.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.user.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.user.model.UserDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="phone" jdbcType="CHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="aboutme" jdbcType="VARCHAR" property="aboutme"/>
+        <result column="passwd" jdbcType="VARCHAR" property="passwd"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="enable" jdbcType="BIT" property="enable"/>
+        <result column="agency_id" jdbcType="INTEGER" property="agencyId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, phone, email, aboutme, passwd, avatar, type, create_time, enable, agency_id
+    </sql>
+    <!--通过Id查询用户信息-->
+    <select id="queryUserById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--查询操作-->
+    <select id="query" resultType="com.jhon.rain.user.model.UserDO">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="email != null">
+                and email = #{email}
+            </if>
+            <if test="passwd != null">
+                and passwd = #{passwd}
+            </if>
+            <if test="enable != null">
+                and enable = #{enable}
+            </if>
+            <if test="type != null and type!=0">
+                and type = #{type}
+            </if>
+        </where>
+    </select>
+    <!--通过邮箱查询用户-->
+    <select id="queryUserByEmail" resultType="com.jhon.rain.user.model.UserDO">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where enable = 1
+        and email = #{email}
+    </select>
+
+    <!--插入操作-->
+    <insert id="insert" parameterType="com.jhon.rain.user.model.UserDO">
+        INSERT INTO user (name,
+                          phone,
+                          email,
+                          aboutme,
+                          passwd,
+                          avatar,
+                          type,
+                          create_time,
+                          enable,
+                          agency_id
+        )
+        VALUES (#{name,jdbcType=VARCHAR},
+                #{phone,jdbcType=CHAR},
+                #{email,jdbcType=VARCHAR},
+                #{aboutme,jdbcType=VARCHAR},
+                #{passwd,jdbcType=VARCHAR},
+                #{avatar,jdbcType=VARCHAR},
+                #{type,jdbcType=BIT},
+                #{createTime,jdbcType=DATE},
+                #{enable,jdbcType=BIT},
+                #{agencyId,jdbcType=INTEGER}
+        )
+    </insert>
+    <!--根据邮箱更新记录信息 -->
+    <update id="update" parameterType="com.jhon.rain.user.model.UserDO">
+        update user
+        <set>
+            <if test="phone !=null and phone != '' ">
+                phone = #{phone},
+            </if>
+            <if test="name !=null and name != '' ">
+                name = #{name},
+            </if>
+            <if test="aboutme !=null and aboutme != '' ">
+                aboutme = #{aboutme},
+            </if>
+            <if test="passwd !=null and passwd != '' ">
+                passwd = #{passwd},
+            </if>
+            <if test="enable !=null ">
+                enable = #{enable},
+            </if>
+            <if test="avatar != null and avatar !=''">
+                avatar = #{avatar},
+            </if>
+        </set>
+        where email = #{email}
+    </update>
+
+    <!--查询经纪人-->
+    <select id="queryAgent" parameterType="com.jhon.rain.user.model.UserDO" resultType="com.jhon.rain.user.model.UserDO">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            enable = 1 and type = 2
+            <if test="user.id != null and user.id != 0">
+                and id = #{user.id}
+            </if>
+            <if test="user.email != null and user.email !='' ">
+                and email = #{user.email}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+</mapper>

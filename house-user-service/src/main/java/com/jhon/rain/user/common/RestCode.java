@@ -1,4 +1,4 @@
-package com.jhon.rain.common;
+package com.jhon.rain.user.common;
 
 /**
  * <p>功能描述</br>返回码</p>
@@ -9,11 +9,12 @@ package com.jhon.rain.common;
  * @date 2018/3/20 21:59
  */
 public enum RestCode {
-  OK(0, "OK"),
-  UNKONWN_ERROR(1, "用户服务异常"),
-  WRONG_PAGE(2, "页码不合法"),
-  USER_NOT_FOUND(3, "用户未找到"),
-  ILLEGAL_PARAMS(4, "参数不合法");
+  OK(0,"ok"),
+  UNKNOWN_ERROR(100001,"未知异常"),
+  TOKEN_INVALID(200001,"TOKEN失效"),
+  USER_NOT_EXIST(200002,"用户不存在"),
+  WRONG_PAGE(200003,"页码不合法"),
+  LACK_PARAMS(200004,"缺少参数");
 
   public final int code;
   public final String msg;

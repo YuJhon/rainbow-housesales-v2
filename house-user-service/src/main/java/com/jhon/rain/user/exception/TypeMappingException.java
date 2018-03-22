@@ -1,4 +1,4 @@
-package com.jhon.rain.exception;
+package com.jhon.rain.user.exception;
 
 /**
  * <p>功能描述</br>类型标识</p>

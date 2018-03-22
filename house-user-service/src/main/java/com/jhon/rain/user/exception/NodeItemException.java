@@ -1,4 +1,4 @@
-package com.jhon.rain.exception;
+package com.jhon.rain.user.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -498,7 +498,7 @@ public class RestAutoConfig {
     ```java
     package com.jhon.rain.controller;
     
-    import com.jhon.rain.common.RestResponse;
+    import com.jhon.rain.user.common.RestResponse;
     import lombok.extern.slf4j.Slf4j;
     import org.springframework.web.bind.annotation.RequestMapping;
     import org.springframework.web.bind.annotation.RestController;

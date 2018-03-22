@@ -1,7 +1,7 @@
-package com.jhon.rain.exception;
+package com.jhon.rain.user.exception;
 
 import com.google.common.collect.ImmutableMap;
-import com.jhon.rain.common.RestCode;
+import com.jhon.rain.user.common.RestCode;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 
@@ -16,11 +16,15 @@ import org.apache.commons.lang.reflect.FieldUtils;
 public class ExcpCodeUtil {
 
   /**
-   * 注册所有的异常
+   * 注册所有的异常（可以自定义）
    */
   private static final ImmutableMap<Object, RestCode> MAP = ImmutableMap.<Object, RestCode>builder()
           .put(NodeItemException.CustomType.WRONG_PAGE_NUM, RestCode.WRONG_PAGE)
-          .put(NodeItemException.class, RestCode.UNKONWN_ERROR).build();
+          .put(NodeItemException.class, RestCode.UNKNOWN_ERROR)
+          .put(UserException.CustomType.USER_NOT_LOGIN,RestCode.TOKEN_INVALID)
+          .put(UserException.CustomType.USER_NOT_FOUND,RestCode.USER_NOT_EXIST)
+          .put(UserException.CustomType.USER_AUTH_FAIL,RestCode.USER_NOT_EXIST)
+          .build();
 
   /**
    * <pre>获取异常中的定义的自定义类型</pre>
@@ -44,7 +48,7 @@ public class ExcpCodeUtil {
    */
   public static RestCode getCode(Throwable throwable) {
     if (throwable == null) {
-      return RestCode.UNKONWN_ERROR;
+      return RestCode.UNKNOWN_ERROR;
     }
     Object target = throwable;
     if (throwable instanceof TypeMappingException) {
@@ -61,6 +65,6 @@ public class ExcpCodeUtil {
     if (rootCause != null) {
       return getCode(throwable);
     }
-    return restCode.UNKONWN_ERROR;
+    return restCode.UNKNOWN_ERROR;
   }
 }

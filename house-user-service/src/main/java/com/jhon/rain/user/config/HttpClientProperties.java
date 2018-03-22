@@ -1,4 +1,4 @@
-package com.jhon.rain.config;
+package com.jhon.rain.user.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

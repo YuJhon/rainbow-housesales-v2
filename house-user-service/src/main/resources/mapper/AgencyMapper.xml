@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.user.mapper.AgencyMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.user.model.AgencyDO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="about_us" jdbcType="VARCHAR" property="aboutUs"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="web_site" jdbcType="VARCHAR" property="webSite"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, address, phone, email, about_us, mobile, web_site
+    </sql>
+
+    <!--查询所有记录-->
+    <select id="queryRecords" parameterType="com.jhon.rain.user.model.AgencyDO" resultType="com.jhon.rain.user.model.AgencyDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from agency
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id}
+            </if>
+            <if test="name != null and name !='' ">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryRecordById" resultType="com.jhon.rain.user.model.AgencyDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from agency
+        WHERE id = #{id}
+        limit 1
+    </select>
+
+    <!--插入记录-->
+    <insert id="insert" parameterType="com.jhon.rain.user.model.AgencyDO">
+        INSERT INTO agency (id,
+                            name,
+                            address,
+                            phone,
+                            email,
+                            about_us,
+                            mobile,
+                            web_site)
+        VALUES (#{id,jdbcType=INTEGER},
+                #{name,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
+                #{aboutUs,jdbcType=VARCHAR},
+                #{mobile,jdbcType=VARCHAR},
+                #{webSite,jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

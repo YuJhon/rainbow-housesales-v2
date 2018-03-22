@@ -1,4 +1,4 @@
-package com.jhon.rain.config;
+package com.jhon.rain.user.config;
 
 import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.filter.stat.StatFilter;
