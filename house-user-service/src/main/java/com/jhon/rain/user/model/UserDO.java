@@ -1,5 +1,6 @@
 package com.jhon.rain.user.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,6 +82,7 @@ public class UserDO {
   /**
    * 头像文件
    **/
+  @JSONField(deserialize=false,serialize=false)
   private MultipartFile avatarFile;
 
   /**
