@@ -131,4 +131,5 @@ public class AccountsAPIController {
     accountsService.logout(user.getToken());
     return "redirect:/index";
   }
+
 }
