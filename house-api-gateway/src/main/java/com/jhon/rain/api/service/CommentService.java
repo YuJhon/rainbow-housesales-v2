@@ -21,4 +21,31 @@ public interface CommentService {
    * @return
    */
   List<CommentDO> getHouseComments(Long houseId, int size);
+
+  /**
+   * <pre>获取博客评论</pre>
+   *
+   * @param blogId 博客Id
+   * @return
+   */
+  List<CommentDO> getBlogComments(Integer blogId);
+
+  /**
+   * <pre>添加房产评论</pre>
+   *
+   * @param houseId 房产Id
+   * @param content 评论内容
+   * @param userId  当前用户
+   */
+  int addHouseComment(Long houseId, String content, Long userId);
+
+  /**
+   * <pre>添加博客评论</pre>
+   *
+   * @param blogId  博客Id
+   * @param content 评论内容
+   * @param userId  当前用户
+   * @return
+   */
+  int addBlogComment(Integer blogId, String content, Long userId);
 }

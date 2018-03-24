@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * <p>功能描述</br></p>
+ * <p>功能描述</br>房产服务的数据问层</p>
  *
  * @author jiangy19
  * @version v1.0
@@ -234,7 +234,7 @@ public class HouseDao {
   public int addHouse(HouseDO house) {
     String result = RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(houseServiceName, "/house/add");
-      ResponseEntity<RestResponse<String>> responseEntity = rest.post(url,house,
+      ResponseEntity<RestResponse<String>> responseEntity = rest.post(url, house,
               new ParameterizedTypeReference<RestResponse<String>>() {
               });
       return responseEntity.getBody();

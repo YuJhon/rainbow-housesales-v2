@@ -9,7 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Repository;
 
 /**
- * <p>功能描述</br></p>
+ * <p>功能描述</br>测试API-Gateway项目的接口</p>
  *
  * @author jiangy19
  * @version v1.0
