@@ -15,7 +15,7 @@
     </sql>
 
     <select id="queryHouseComments" resultType="com.jhon.rain.comment.model.CommentDO">
-        select <include refid="commentField"/>
+        select <include refid="Base_Column_List"/>
         from   comment
         where  type =1 and house_id = #{houseId}
         order  by create_time desc
@@ -23,7 +23,7 @@
     </select>
 
     <select id="queryBlogComments" resultType="com.jhon.rain.comment.model.CommentDO">
-        select <include refid="commentField"/>
+        select <include refid="Base_Column_List"/>
         from   comment
         where  type = 2 and blog_id = #{blogId}
         order  by create_time desc

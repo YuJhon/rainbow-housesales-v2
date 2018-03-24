@@ -18,22 +18,21 @@
         content
     </sql>
 
-    <select id="queryOneBlogById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    <select id="queryRecordById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
-        <include refid="Base_Column_List"/>
-        ,
+        <include refid="Base_Column_List"/>,
         <include refid="Blob_Column_List"/>
         from blog
         where id = #{id,jdbcType=INTEGER}
     </select>
 
-    <delete id="queryBlogList" parameterType="com.jhon.rain.comment.model.BlogDO">
-        <include refid="Base_Column_List"/>
-        ,
+    <select id="queryBlogList" parameterType="com.jhon.rain.comment.model.BlogDO" resultMap="ResultMapWithBLOBs">
+        SELECT
+        <include refid="Base_Column_List"/>,
         <include refid="Blob_Column_List"/>
         from blog
         order by create_time desc
-    </delete>
+    </select>
 
     <insert id="insert" parameterType="com.jhon.rain.comment.model.BlogDO">
         INSERT INTO blog (tags, create_time,

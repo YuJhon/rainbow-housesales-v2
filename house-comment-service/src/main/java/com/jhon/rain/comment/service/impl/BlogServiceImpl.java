@@ -33,7 +33,7 @@ public class BlogServiceImpl implements BlogService {
   @Override
   public PageListResponse<BlogDO> queryBlogList(BlogDO query, Integer pageNum, Integer pageSize) {
     Page<BlogDO> pageInfo = PageHelper.startPage(pageNum, pageSize);
-    List<BlogDO> agencies = blogMapper.queryBlog(query);
+    List<BlogDO> agencies = blogMapper.queryBlogList(query);
     long count = pageInfo.getTotal();
     PageListResponse<BlogDO> pageListResp = new PageListResponse<>();
     pageListResp.setCount(count);

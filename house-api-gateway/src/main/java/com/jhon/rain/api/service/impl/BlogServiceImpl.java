@@ -26,6 +26,12 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   public PageData<BlogDO> queryBlogs(BlogDO query, Integer pageSize, Integer pageNum) {
+    if (pageSize == null){
+      pageSize = 10;
+    }
+    if (pageNum == null){
+      pageNum = 1;
+    }
     PageListResponse<BlogDO> pageListResponse = blogDao.queryBlogs(query, pageNum, pageSize);
     return PageData.<BlogDO>buildPage(pageListResponse.getDataList(), pageListResponse.getCount(), pageNum, pageSize);
 

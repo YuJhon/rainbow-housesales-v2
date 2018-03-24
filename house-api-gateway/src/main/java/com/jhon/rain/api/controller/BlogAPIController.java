@@ -9,6 +9,7 @@ import com.jhon.rain.api.service.BlogService;
 import com.jhon.rain.api.service.CommentService;
 import com.jhon.rain.api.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import java.util.List;
  * @projectName rainbow-house-v2
  * @date 2018/3/24 20:24
  */
+@Controller
 @RequestMapping("blog")
 public class BlogAPIController {
 

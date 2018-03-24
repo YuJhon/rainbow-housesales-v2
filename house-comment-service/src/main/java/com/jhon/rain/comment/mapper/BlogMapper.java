@@ -21,7 +21,7 @@ public interface BlogMapper {
    * @param query
    * @return
    */
-  List<BlogDO> queryBlog(BlogDO query);
+  List<BlogDO> queryBlogList(BlogDO query);
 
   /**
    * <pre>通过主键查询记录</pre>

@@ -41,7 +41,7 @@
                                 </div>
                             </figure>
                             <p>
-                               ${blog.digest}
+                               ${blog.title}
                             </p>
                             <a href="/blog/detail?id=${blog.id}" class="link-arrow">Read More</a>
                         </article><!-- /.blog-post -->

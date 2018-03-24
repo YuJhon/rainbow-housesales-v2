@@ -66,7 +66,7 @@
                                                 </div>
                                             </figure>
                                             <div class="comment-wrapper">
-                                                <div class="name pull-left">${comment.userName}</div>
+                                                <div class="name pull-left">${comment.username}</div>
                                                 <span class="date pull-right"><span class="fa fa-calendar"></span>${(comment.createTime)?datetime}</span>
                                                 <p>${comment.content}
                                                 </p>
