@@ -2,6 +2,7 @@ package com.jhon.rain.api.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -38,5 +39,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
             .addPathPatterns("/comment/leaveComment")
             .addPathPatterns("/comment/leaveBlogComment");
     super.addInterceptors(registry);
+  }
+
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+            .allowedOrigins("*")//放行哪些域名
+            .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")//放行哪些http方法
+            .allowCredentials(false)//是否允许发送cookie
+            .allowedHeaders("*")//用于预检请求，放行哪些header
+            .exposedHeaders("header1","header2")//暴露哪些头部信息
+            .maxAge(3600);
   }
 }
