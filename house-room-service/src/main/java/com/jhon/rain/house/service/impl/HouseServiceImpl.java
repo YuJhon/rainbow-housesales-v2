@@ -106,7 +106,7 @@ public class HouseServiceImpl implements HouseService {
     long count = pageInfo.getTotal();
     PageListResponse<HouseDO> pageListResp = new PageListResponse<>();
     pageListResp.setCount(count);
-    pageListResp.setDateList(houseList);
+    pageListResp.setDataList(houseList);
     return pageListResp;
   }
 

@@ -11,6 +11,7 @@ import com.jhon.rain.api.service.AgencyService;
 import com.jhon.rain.api.service.HouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,7 @@ import java.util.Objects;
  * @date 2018/3/23 8:42
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("agency")
 public class AgencyAPIController {
 
@@ -60,7 +61,7 @@ public class AgencyAPIController {
    * @param agency
    * @return
    */
-  @RequestMapping("submit")
+  @RequestMapping("/submit")
   public String agencySubmit(AgencyDO agency) {
     UserDO user = UserContext.getUser();
     if (user == null || !Objects.equals("jiangy19@126.com", user.getEmail())) {
@@ -119,7 +120,7 @@ public class AgencyAPIController {
    * @param modelMap 携带信息到页面
    * @return
    */
-  @GetMapping("list")
+  @GetMapping("/list")
   public String agencyList(ModelMap modelMap) {
     List<AgencyDO> agencies = agencyService.getAllAgency();
     List<HouseDO> houses = houseService.getHotHouses(CommonConstants.RECOM_SIZE);
@@ -137,7 +138,7 @@ public class AgencyAPIController {
    * @param modelMap
    * @return
    */
-  @RequestMapping("agentMsg")
+  @RequestMapping("/agentMsg")
   public String agentMsg(Long id, String msg, String email, ModelMap modelMap) {
     UserDO user = agencyService.getAgentDetail(id);
     //mailService.sendSimpleMail("来自"+ email +"的咨询", msg, user.getEmail());

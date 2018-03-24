@@ -57,7 +57,7 @@ public class AgencyServiceImpl implements AgencyService {
     long count = pageInfo.getTotal();
     PageListResponse<UserDO> pageListResp = new PageListResponse<>();
     pageListResp.setCount(count);
-    pageListResp.setDateList(agencies);
+    pageListResp.setDataList(agencies);
     return pageListResp;
   }
 

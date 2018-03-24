@@ -1,6 +1,7 @@
 package com.jhon.rain.house.mapper;
 
 import com.jhon.rain.house.model.HouseUserDO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -11,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @projectName rainbow-house-v2
  * @date 2018/3/24 12:33
  */
+@Mapper
 public interface HouseUserMapper {
   /**
    * <pre>解除房产关系</pre>

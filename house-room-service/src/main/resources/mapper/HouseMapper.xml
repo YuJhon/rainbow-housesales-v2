@@ -68,7 +68,7 @@
                 <bind name="patten1" value="'%'+name+'%'"/>
                 and a.name like #{patten1}
             </if>
-            <if test="ids != null and ids != ''">
+            <if test="ids != null and ids.size() > 0 ">
                 and a.id in
                 <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
                     #{item}

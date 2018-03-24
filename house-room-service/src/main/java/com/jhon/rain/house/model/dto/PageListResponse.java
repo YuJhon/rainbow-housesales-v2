@@ -18,7 +18,7 @@ public class PageListResponse<T> {
   /**
    * 数据列表
    */
-  private List<T> dateList;
+  private List<T> dataList;
   /**
    * 总共条数
    */
@@ -26,7 +26,7 @@ public class PageListResponse<T> {
 
   public static <T> PageListResponse<T> build(List<T> dataList, Long count) {
     PageListResponse<T> pageListResp = new PageListResponse<>();
-    pageListResp.setDateList(dataList);
+    pageListResp.setDataList(dataList);
     pageListResp.setCount(count);
     return pageListResp;
   }

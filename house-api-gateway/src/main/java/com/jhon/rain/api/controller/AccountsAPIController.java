@@ -138,16 +138,16 @@ public class AccountsAPIController {
   /**
    * <pre>发送通知</pre>
    *
-   * @param email
+   * @param username
    * @return
    */
   @RequestMapping("/remember")
-  public String restNotify(String email, ModelMap modelMap) {
-    if (StringUtils.isBlank(email)) {
+  public String restNotify(String username, ModelMap modelMap) {
+    if (StringUtils.isBlank(username)) {
       return "redirect:/accounts/signin?" + ResultMsg.errorMsg("邮箱不能为空").asUrlParams();
     }
-    accountsService.resetEmailNotify(email);
-    modelMap.put("email", email);
+    accountsService.resetEmailNotify(username);
+    modelMap.put("email", username);
     return "user/accounts/remember";
   }
 
