@@ -180,4 +180,20 @@ public class AccountsDao {
       return responseEntity.getBody();
     }).getResult();
   }
+
+  /**
+   * <pre>通过token查询账号信息</pre>
+   *
+   * @param token
+   * @return
+   */
+  public UserDO queryAccountByToken(String token) {
+    return RestHelper.exec(() -> {
+      String url = RestHelper.formatUrl(userServiceName, "/user/getUserByToken?token=" + token);
+      ResponseEntity<RestResponse<UserDO>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<UserDO>>() {
+              });
+      return responseEntity.getBody();
+    }).getResult();
+  }
 }

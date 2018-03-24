@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.house.mapper.HouseMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.house.model.HouseDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="images" jdbcType="VARCHAR" property="images"/>
+        <result column="area" jdbcType="INTEGER" property="area"/>
+        <result column="beds" jdbcType="INTEGER" property="beds"/>
+        <result column="baths" jdbcType="INTEGER" property="baths"/>
+        <result column="rating" jdbcType="DOUBLE" property="rating"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="properties" jdbcType="VARCHAR" property="properties"/>
+        <result column="floor_plan" jdbcType="VARCHAR" property="floorPlan"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+        <result column="community_id" jdbcType="INTEGER" property="communityId"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="state" jdbcType="BIT" property="state"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, type, price, images, area, beds, baths, rating, remarks, properties, floor_plan,
+        tags, create_time, city_id, community_id, address, state
+    </sql>
+
+    <select id="queryDetailById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from house
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryHouseList" resultMap="BaseResultMap" parameterType="com.jhon.rain.house.model.HouseDO">
+        select a.id,a.name,a.type,a.price,a.images,a.area,a.beds,a.baths,a.rating,a.remarks,
+        a.properties,a.floor_plan,a.tags,a.create_time,
+        a.city_id,a.community_id,a.address,a.state
+        from house a
+        <if test="userId != null and userId !=0">
+            inner join (select house_id,user_id from house_user
+            <where>
+                user_id = #{userId}
+                <if test="bookmarked != null and bookmarked == true">
+                    and type = 2
+                </if>
+                <if test="bookmarked != null and bookmarked == false">
+                    and type = 1
+                </if>
+            </where>
+            ) b
+            on a.id = b.house_id
+        </if>
+        <where>
+            /*只显示已上架的房产*/
+            a.state = 1
+            <if test="id != null and id != 0">
+                and a.id = #{id}
+            </if>
+            <if test="type!=null">
+                and a.type = #{type}
+            </if>
+            <if test="communityId != null">
+                and a.community_id = #{communityId}
+            </if>
+            <if test="name != null and name != '' ">
+                <bind name="patten1" value="'%'+name+'%'"/>
+                and a.name like #{patten1}
+            </if>
+            <if test="ids != null and ids != ''">
+                and a.id in
+                <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jhon.rain.house.model.HouseDO">
+        INSERT INTO house (name, type, price,
+                           images, area, beds,
+                           baths, rating, remarks,
+                           properties, floor_plan, tags,
+                           create_time, city_id, community_id,
+                           address, state)
+        VALUES (#{name,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{price,jdbcType=INTEGER},
+                                          #{images,jdbcType=VARCHAR}, #{area,jdbcType=INTEGER},
+                                          #{beds,jdbcType=INTEGER},
+                                          #{baths,jdbcType=INTEGER}, #{rating,jdbcType=DOUBLE},
+                                          #{remarks,jdbcType=VARCHAR},
+                                          #{properties,jdbcType=VARCHAR}, #{floorPlan,jdbcType=VARCHAR},
+                #{tags,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{cityId,jdbcType=INTEGER}, #{communityId,jdbcType=INTEGER},
+                #{address,jdbcType=VARCHAR}, #{state,jdbcType=BIT})
+    </insert>
+
+    <update id="updateHouseRating">
+        UPDATE house
+        SET rating = #{rating}
+        WHERE id = #{id}
+    </update>
+
+
+    <update id="downHouse">
+        UPDATE house
+        SET state = 2
+        WHERE id = #{id}
+    </update>
+
+</mapper>

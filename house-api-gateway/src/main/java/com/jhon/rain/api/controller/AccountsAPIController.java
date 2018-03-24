@@ -164,7 +164,7 @@ public class AccountsAPIController {
     if (StringUtils.isBlank(email)) {
       return "redirect:/accounts/signin?" + ResultMsg.errorMsg("重置链接已过期");
     }
-    modelMap.put("", email);
+    modelMap.put("email", email);
     modelMap.put("success_key", key);
     return "/user/accounts/reset";
   }

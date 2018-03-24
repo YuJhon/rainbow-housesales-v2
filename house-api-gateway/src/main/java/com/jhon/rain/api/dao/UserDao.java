@@ -2,6 +2,7 @@ package com.jhon.rain.api.dao;
 
 import com.jhon.rain.api.common.RestResponse;
 import com.jhon.rain.api.config.GenericRest;
+import com.jhon.rain.api.model.UserDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

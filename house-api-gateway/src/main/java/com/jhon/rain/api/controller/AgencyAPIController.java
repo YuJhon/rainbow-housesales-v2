@@ -4,9 +4,11 @@ import com.jhon.rain.api.common.CommonConstants;
 import com.jhon.rain.api.common.ResultMsg;
 import com.jhon.rain.api.interceptor.UserContext;
 import com.jhon.rain.api.model.AgencyDO;
+import com.jhon.rain.api.model.HouseDO;
 import com.jhon.rain.api.model.UserDO;
 import com.jhon.rain.api.page.PageData;
 import com.jhon.rain.api.service.AgencyService;
+import com.jhon.rain.api.service.HouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -34,6 +36,9 @@ public class AgencyAPIController {
   @Autowired
   private AgencyService agencyService;
 
+  @Autowired
+  private HouseService houseService;
+
 
   /**
    * <pre>添加经纪人</pre>
@@ -50,6 +55,22 @@ public class AgencyAPIController {
   }
 
   /**
+   * <pre>添加经纪人机构</pre>
+   *
+   * @param agency
+   * @return
+   */
+  @RequestMapping("submit")
+  public String agencySubmit(AgencyDO agency) {
+    UserDO user = UserContext.getUser();
+    if (user == null || !Objects.equals("jiangy19@126.com", user.getEmail())) {
+      return "redirect:/accounts/signin?" + ResultMsg.successMsg("请先登录").asUrlParams();
+    }
+    agencyService.add(agency);
+    return "redirect:/index?" + ResultMsg.errorMsg("创建成功").asUrlParams();
+  }
+
+  /**
    * <pre>查询经纪人列表</pre>
    *
    * @param pageNum  分页的当前页
@@ -61,8 +82,8 @@ public class AgencyAPIController {
   public String agentList(@RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
                           @RequestParam(name = "pageSize", defaultValue = "6") Integer pageSize,
                           ModelMap modelMap) {
-    PageData<UserDO> ps = agencyService.getPageAgency(pageNum, pageSize);
-    List<HouseDO> houses = recommendService.getHotHouses(CommonConstants.RECOM_SIZE);
+    PageData<UserDO> ps = agencyService.getPageAgent(pageNum, pageSize);
+    List<HouseDO> houses = houseService.getHotHouses(CommonConstants.RECOM_SIZE);
     modelMap.put("recomHouses", houses);
     modelMap.put("ps", ps);
     return "user/agent/agentList";
@@ -78,7 +99,7 @@ public class AgencyAPIController {
   @RequestMapping("/agentDetail")
   public String agentDetail(Long id, ModelMap modelMap) {
     UserDO user = agencyService.getAgentDetail(id);
-    List<HouseDO> houses = recommendService.getHotHouses(CommonConstants.RECOM_SIZE);
+    List<HouseDO> houses = houseService.getHotHouses(CommonConstants.RECOM_SIZE);
     HouseDO query = new HouseDO();
     query.setUserId(id);
     query.setBookmarked(false);
@@ -101,9 +122,25 @@ public class AgencyAPIController {
   @GetMapping("list")
   public String agencyList(ModelMap modelMap) {
     List<AgencyDO> agencies = agencyService.getAllAgency();
-    List<HouseDO> houses = recommendService.getHotHouses(CommonConstants.RECOM_SIZE);
+    List<HouseDO> houses = houseService.getHotHouses(CommonConstants.RECOM_SIZE);
     modelMap.put("recomHouses", houses);
     modelMap.put("agencyList", agencies);
     return "/user/agency/agencyList";
+  }
+
+  /**
+   * <pre>留言</pre>
+   *
+   * @param id
+   * @param msg
+   * @param email
+   * @param modelMap
+   * @return
+   */
+  @RequestMapping("agentMsg")
+  public String agentMsg(Long id, String msg, String email, ModelMap modelMap) {
+    UserDO user = agencyService.getAgentDetail(id);
+    //mailService.sendSimpleMail("来自"+ email +"的咨询", msg, user.getEmail());
+    return "redirect:/agency/agentDetail?id=" + id + "&" + ResultMsg.successMsg("留言成功").asUrlParams();
   }
 }

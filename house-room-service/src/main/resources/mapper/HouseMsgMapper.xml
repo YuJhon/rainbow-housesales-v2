@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.house.mapper.HouseMsgMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.house.model.HouseMsgDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="msg" jdbcType="VARCHAR" property="msg"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="agent_id" jdbcType="BIGINT" property="agentId"/>
+        <result column="house_id" jdbcType="BIGINT" property="houseId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, msg, create_time, agent_id, house_id, user_name
+    </sql>
+
+    <insert id="addHouseMsg" parameterType="com.jhon.rain.house.model.HouseMsgDO">
+        INSERT INTO house_msg (msg, create_time,
+                               agent_id, house_id, user_name
+        )
+        VALUES (#{msg,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE},
+                #{agentId,jdbcType=BIGINT}, #{houseId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

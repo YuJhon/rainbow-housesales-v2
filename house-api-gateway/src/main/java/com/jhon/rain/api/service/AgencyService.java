@@ -30,7 +30,7 @@ public interface AgencyService {
    * @param pageSize 每页查询的数据大小
    * @return
    */
-  PageData<UserDO> getPageAgency(Integer pageNum, Integer pageSize);
+  PageData<UserDO> getPageAgent(Integer pageNum, Integer pageSize);
 
   /**
    * <pre>查找用户所属经纪机构的详细信息</pre>
@@ -39,4 +39,12 @@ public interface AgencyService {
    * @return 经纪结构详细信息
    */
   UserDO getAgentDetail(Long userId);
+
+  /**
+   * <pre>添加经纪机构</pre>
+   *
+   * @param agency
+   * @return
+   */
+  int add(AgencyDO agency);
 }

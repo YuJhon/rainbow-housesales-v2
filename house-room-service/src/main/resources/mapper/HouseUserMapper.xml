@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.house.mapper.HouseUserMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.house.model.HouseUserDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="house_id" jdbcType="BIGINT" property="houseId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, house_id, user_id, create_time, type
+    </sql>
+
+    <select id="queryHouseUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from house_user
+        where house_id = #{house_id}
+        and user_id = #{userId}
+        and type = #{type}
+    </select>
+
+    <insert id="insertHouseUser" parameterType="com.jhon.rain.house.model.HouseUserDO">
+        INSERT INTO house_user (house_id,
+                                user_id,
+                                create_time,
+                                type)
+        VALUES (#{houseId,jdbcType=BIGINT},
+                #{userId,jdbcType=BIGINT},
+                #{createTime,jdbcType=DATE},
+                #{type,jdbcType=BIT})
+    </insert>
+
+    <delete id="deleteHouseUser">
+        DELETE FROM house_user
+        WHERE house_id = #{houseId}
+              AND user_id = #{userId}
+              AND type = #{type}
+    </delete>
+
+</mapper>
