@@ -1,7 +1,7 @@
 package com.jhon.rain.comment.exception;
 
-import com.jhon.rain.user.common.RestCode;
-import com.jhon.rain.user.common.RestResponse;
+import com.jhon.rain.comment.common.RestCode;
+import com.jhon.rain.comment.common.RestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

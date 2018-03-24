@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.comment.mapper.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.comment.model.CommentDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="house_id" jdbcType="BIGINT" property="houseId"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="blog_id" jdbcType="INTEGER" property="blogId"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, content, house_id, create_time, blog_id, type, user_id
+    </sql>
+
+    <select id="queryHouseComments" resultType="com.jhon.rain.comment.model.CommentDO">
+        select <include refid="commentField"/>
+        from   comment
+        where  type =1 and house_id = #{houseId}
+        order  by create_time desc
+        limit  #{size}
+    </select>
+
+    <select id="queryBlogComments" resultType="com.jhon.rain.comment.model.CommentDO">
+        select <include refid="commentField"/>
+        from   comment
+        where  type = 2 and blog_id = #{blogId}
+        order  by create_time desc
+        limit  #{size}
+    </select>
+
+
+
+    <insert id="insert" parameterType="com.jhon.rain.comment.model.CommentDO">
+        INSERT INTO comment (content, house_id,
+                             create_time, blog_id, type,
+                             user_id)
+        VALUES (#{content,jdbcType=VARCHAR}, #{houseId,jdbcType=BIGINT},
+                #{createTime,jdbcType=DATE}, #{blogId,jdbcType=INTEGER}, #{type,jdbcType=BIT},
+                #{userId,jdbcType=BIGINT})
+    </insert>
+
+</mapper>

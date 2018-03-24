@@ -1,6 +1,6 @@
 package com.jhon.rain.comment.utils;
 
-import com.jhon.rain.house.exception.RestException;
+import com.jhon.rain.comment.exception.RestException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.reflect.FieldUtils;
 

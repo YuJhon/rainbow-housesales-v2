@@ -1,7 +1,7 @@
 package com.jhon.rain.comment.exception;
 
 import com.google.common.collect.ImmutableMap;
-import com.jhon.rain.user.common.RestCode;
+import com.jhon.rain.comment.common.RestCode;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 
@@ -21,9 +21,6 @@ public class ExcpCodeUtil {
   private static final ImmutableMap<Object, RestCode> MAP = ImmutableMap.<Object, RestCode>builder()
           .put(NodeItemException.CustomType.WRONG_PAGE_NUM, RestCode.WRONG_PAGE)
           .put(NodeItemException.class, RestCode.UNKNOWN_ERROR)
-          .put(UserException.CustomType.USER_NOT_LOGIN,RestCode.TOKEN_INVALID)
-          .put(UserException.CustomType.USER_NOT_FOUND,RestCode.USER_NOT_EXIST)
-          .put(UserException.CustomType.USER_AUTH_FAIL,RestCode.USER_NOT_EXIST)
           .build();
 
   /**

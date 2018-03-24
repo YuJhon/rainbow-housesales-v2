@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhon.rain.comment.mapper.BlogMapper">
+    <resultMap id="BaseResultMap" type="com.jhon.rain.comment.model.BlogDO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="cat" jdbcType="INTEGER" property="cat"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jhon.rain.comment.model.BlogDO">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, tags, create_time, title, cat
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+
+    <select id="queryOneBlogById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from blog
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="queryBlogList" parameterType="com.jhon.rain.comment.model.BlogDO">
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from blog
+        order by create_time desc
+    </delete>
+
+    <insert id="insert" parameterType="com.jhon.rain.comment.model.BlogDO">
+        INSERT INTO blog (tags, create_time,
+                          title, cat, content
+        )
+        VALUES (#{tags,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE},
+                #{title,jdbcType=VARCHAR}, #{cat,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+
+</mapper>
