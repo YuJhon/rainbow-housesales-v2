@@ -11,4 +11,6 @@ package com.jhon.rain.api.common;
 public class CommonConstants {
 
   public static final String USER_ATTRIBUTE = "loginUser";
+
+  public static final int RECOM_SIZE = 3;
 }

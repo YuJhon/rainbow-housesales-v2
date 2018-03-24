@@ -36,6 +36,6 @@ public class AgencyServiceImpl implements AgencyService {
 
   @Override
   public UserDO getAgentDetail(Long userId) {
-    return null;
+    return agencyDao.getAgentDetail(userId);
   }
 }

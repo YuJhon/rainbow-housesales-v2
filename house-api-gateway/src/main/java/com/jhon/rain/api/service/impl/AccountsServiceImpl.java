@@ -5,6 +5,7 @@ import com.jhon.rain.api.dao.AccountsDao;
 import com.jhon.rain.api.model.UserDO;
 import com.jhon.rain.api.service.AccountsService;
 import com.jhon.rain.api.service.FileService;
+import com.jhon.rain.api.util.BeanHelper;
 import com.jhon.rain.api.util.RestHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AccountsServiceImpl implements AccountsService {
       List<String> imgs = fileService.getImgPaths(Lists.newArrayList(account.getAvatarFile()));
       account.setAvatar(imgs.get(0));
     }
-    account.setEnableUrl(RestHelper.formatUrl(domainName, "/user/activate"));
+    account.setEnableUrl(RestHelper.formatUrl(domainName, "/accounts/verify"));
     return accountsDao.addAccount(account);
   }
 
@@ -66,7 +67,7 @@ public class AccountsServiceImpl implements AccountsService {
 
   @Override
   public boolean enable(String key) {
-    if (StringUtils.isBlank(key)){
+    if (StringUtils.isBlank(key)) {
       return false;
     }
     return accountsDao.activateAccount(key);
@@ -90,22 +91,23 @@ public class AccountsServiceImpl implements AccountsService {
 
   @Override
   public String getResetEmail(String key) {
-    return null;
+    return accountsDao.getResetEmail(key);
   }
 
   @Override
   public UserDO reset(String key, String passwd) {
-    return null;
+    return accountsDao.resetPassword(key, passwd);
   }
 
   @Override
   public void resetNotify(String email) {
-
+    this.resetEmailNotify(email);
   }
 
   @Override
-  public int updateUser(UserDO user, String email) {
-    return 0;
+  public UserDO updateUser(UserDO user) {
+    BeanHelper.onUpdate(user);
+    return accountsDao.updateUserInfo(user);
   }
 
   @Override
@@ -116,5 +118,11 @@ public class AccountsServiceImpl implements AccountsService {
   @Override
   public void logout(String token) {
     accountsDao.logout(token);
+  }
+
+  @Override
+  public void resetEmailNotify(String email) {
+    String notifyUrl = RestHelper.formatUrl(domainName, "accounts/reset");
+    accountsDao.resetNofity(email, notifyUrl);
   }
 }

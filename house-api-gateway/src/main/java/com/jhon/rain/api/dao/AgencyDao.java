@@ -3,6 +3,7 @@ package com.jhon.rain.api.dao;
 import com.jhon.rain.api.common.RestResponse;
 import com.jhon.rain.api.config.GenericRest;
 import com.jhon.rain.api.model.AgencyDO;
+import com.jhon.rain.api.model.UserDO;
 import com.jhon.rain.api.util.RestHelper;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -38,8 +40,25 @@ public class AgencyDao {
   public List<AgencyDO> getAllAgency() {
     return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/agency/list");
-      ResponseEntity<RestResponse<List<AgencyDO>>> responseEntity = rest.get(url, new ParameterizedTypeReference<RestResponse<List<AgencyDO>>>() {
-      });
+      ResponseEntity<RestResponse<List<AgencyDO>>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<List<AgencyDO>>>() {
+              });
+      return responseEntity.getBody();
+    }).getResult();
+  }
+
+  /**
+   * <pre>查询经纪机构人的详细信息</pre>
+   *
+   * @param userId 用户Id
+   * @return
+   */
+  public UserDO getAgentDetail(Long userId) {
+    return RestHelper.exec(() -> {
+      String url = RestHelper.formatUrl(userServiceName, "/agency/agentDetail?id=" + userId);
+      ResponseEntity<RestResponse<UserDO>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<UserDO>>() {
+              });
       return responseEntity.getBody();
     }).getResult();
   }

@@ -74,10 +74,9 @@ public interface AccountsService {
    * <pre>更新用户信息</pre>
    *
    * @param user
-   * @param email
    * @return
    */
-  int updateUser(UserDO user, String email);
+  UserDO updateUser(UserDO user);
 
   /**
    * <pre>查询用户信息</pre>
@@ -93,4 +92,11 @@ public interface AccountsService {
    * @param token
    */
   void logout(String token);
+
+  /**
+   * <pre>重置</pre>
+   *
+   * @param email
+   */
+  void resetEmailNotify(String email);
 }

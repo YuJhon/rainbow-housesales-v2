@@ -11,6 +11,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -90,8 +91,9 @@ public class AccountsDao {
   public boolean activateAccount(String key) {
     String result = RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/activate?key=" + key);
-      ResponseEntity<RestResponse<String>> responseEntity = rest.get(url, new ParameterizedTypeReference<RestResponse<String>>() {
-      });
+      ResponseEntity<RestResponse<String>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<String>>() {
+              });
       return responseEntity.getBody();
     }).getResult();
     log.info("User Activate Result = {}", result);
@@ -100,15 +102,82 @@ public class AccountsDao {
 
   /**
    * <pre>注销登录</pre>
+   *
    * @param token
    */
   public void logout(String token) {
     String result = RestHelper.exec(() -> {
-      String url = RestHelper.formatUrl(userServiceName, "/user/logout?token="+token);
-      ResponseEntity<RestResponse<String>> responseEntity = rest.get(url, new ParameterizedTypeReference<RestResponse<String>>() {
-      });
+      String url = RestHelper.formatUrl(userServiceName, "/user/logout?token=" + token);
+      ResponseEntity<RestResponse<String>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<String>>() {
+              });
       return responseEntity.getBody();
     }).getResult();
     log.info("User Activate Result = {}", result);
+  }
+
+  /**
+   * <pre>发送重置通知</pre>
+   *
+   * @param email     邮箱
+   * @param notifyUrl 通知地址
+   */
+  public void resetNofity(String email, String notifyUrl) {
+    RestHelper.exec(() -> {
+      String url = RestHelper.formatUrl(userServiceName, "/user/resetNotify?email=" + email + "&notifyUrl=" + notifyUrl);
+      ResponseEntity<RestResponse<String>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<String>>() {
+              });
+      return responseEntity.getBody();
+    });
+  }
+
+  /**
+   * <pre>获取重置的邮箱</pre>
+   *
+   * @param key
+   * @return
+   */
+  public String getResetEmail(String key) {
+    return RestHelper.exec(() -> {
+      String url = RestHelper.formatUrl(userServiceName, "/user/getEmailByKey?key=" + key);
+      ResponseEntity<RestResponse<String>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<String>>() {
+              });
+      return responseEntity.getBody();
+    }).getResult();
+  }
+
+  /**
+   * <pre>重置密码</pre>
+   *
+   * @param key    获取邮件的key
+   * @param passwd 重置之后的密码
+   * @return
+   */
+  public UserDO resetPassword(String key, String passwd) {
+    return RestHelper.exec(() -> {
+      String url = RestHelper.formatUrl(userServiceName, "/user/resetPwd?key=" + key + "&password=" + passwd);
+      ResponseEntity<RestResponse<UserDO>> responseEntity = rest.get(url,
+              new ParameterizedTypeReference<RestResponse<UserDO>>() {
+              });
+      return responseEntity.getBody();
+    }).getResult();
+  }
+
+  /**
+   * <pre>更新用户信息</pre>
+   *
+   * @param user
+   * @return
+   */
+  public UserDO updateUserInfo(UserDO user) {
+    return RestHelper.exec(() -> {
+      String url = RestHelper.formatUrl(userServiceName, "/user/updateInfo");
+      ResponseEntity<RestResponse<UserDO>> responseEntity = rest.post(url, user,
+              new ParameterizedTypeReference<RestResponse<UserDO>>() {
+              });
+      return responseEntity.getBody();
+    }).getResult();
   }
 }
