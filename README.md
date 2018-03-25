@@ -1,4 +1,4 @@
-# 房产销售平台--微服务化
+# 房产平台--微服务化
 > 　　去年的时候新建过一个业余项目[microservice-rainbow](https://github.com/YuJhon/microservice-rainbow)来学习Spring cloud的一些基础组件的使用，但是没有在实际项目中应用过，有些东西还是停留在了理论阶段，现在正好有一个业余的项目来实战操作，以此来加强对SpringCloud微服务架构的了解和应用。
 ## 项目初始化预览
 * 1.注册中心搭建完成
