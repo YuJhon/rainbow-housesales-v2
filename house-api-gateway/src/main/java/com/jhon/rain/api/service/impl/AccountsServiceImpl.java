@@ -123,6 +123,6 @@ public class AccountsServiceImpl implements AccountsService {
   @Override
   public void resetEmailNotify(String email) {
     String notifyUrl = RestHelper.formatUrl(domainName, "accounts/reset");
-    accountsDao.resetNofity(email, notifyUrl);
+    accountsDao.resetNotify(email, notifyUrl);
   }
 }

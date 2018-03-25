@@ -4,6 +4,9 @@ import com.jhon.rain.api.common.RestResponse;
 import com.jhon.rain.api.config.GenericRest;
 import com.jhon.rain.api.model.UserDO;
 import com.jhon.rain.api.util.RestHelper;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +27,10 @@ import java.util.List;
  */
 @Slf4j
 @Repository
+@DefaultProperties(groupKey = "userDao", threadPoolKey = "userDao",
+        commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000")},
+        threadPoolProperties = {@HystrixProperty(name = "coreSize", value = "10"), @HystrixProperty(name = "maxQueueSize", value = "1000")}
+)
 public class AccountsDao {
 
   @Autowired
@@ -38,6 +45,7 @@ public class AccountsDao {
    * @param query 用户信息
    * @return
    */
+  @HystrixCommand
   public List<UserDO> getAccountList(UserDO query) {
     return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/getList");
@@ -54,6 +62,7 @@ public class AccountsDao {
    * @param account 注册用户信息
    * @return
    */
+  @HystrixCommand
   public int addAccount(UserDO account) {
     String result = RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/register");
@@ -75,11 +84,11 @@ public class AccountsDao {
   public UserDO auth(UserDO user) {
     return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/auth");
-      ResponseEntity<UserDO> responseEntity = rest.post(url, user,
-              new ParameterizedTypeReference<UserDO>() {
+      ResponseEntity<RestResponse<UserDO>> responseEntity = rest.post(url, user,
+              new ParameterizedTypeReference<RestResponse<UserDO>>() {
               });
       return responseEntity.getBody();
-    });
+    }).getResult();
   }
 
   /**
@@ -88,6 +97,7 @@ public class AccountsDao {
    * @param key 激活码
    * @return
    */
+  @HystrixCommand
   public boolean activateAccount(String key) {
     String result = RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/activate?key=" + key);
@@ -105,6 +115,7 @@ public class AccountsDao {
    *
    * @param token
    */
+  @HystrixCommand
   public void logout(String token) {
     String result = RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/logout?token=" + token);
@@ -122,7 +133,8 @@ public class AccountsDao {
    * @param email     邮箱
    * @param notifyUrl 通知地址
    */
-  public void resetNofity(String email, String notifyUrl) {
+  @HystrixCommand
+  public void resetNotify(String email, String notifyUrl) {
     RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/resetNotify?email=" + email + "&notifyUrl=" + notifyUrl);
       ResponseEntity<RestResponse<String>> responseEntity = rest.get(url,
@@ -138,6 +150,7 @@ public class AccountsDao {
    * @param key
    * @return
    */
+  @HystrixCommand
   public String getResetEmail(String key) {
     return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/getEmailByKey?key=" + key);
@@ -155,6 +168,7 @@ public class AccountsDao {
    * @param passwd 重置之后的密码
    * @return
    */
+  @HystrixCommand
   public UserDO resetPassword(String key, String passwd) {
     return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/resetPwd?key=" + key + "&password=" + passwd);
@@ -171,6 +185,7 @@ public class AccountsDao {
    * @param user
    * @return
    */
+  @HystrixCommand
   public UserDO updateUserInfo(UserDO user) {
     return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/updateInfo");
@@ -187,13 +202,32 @@ public class AccountsDao {
    * @param token
    * @return
    */
+  /*(fallbackMethod = "queryAccountByTokenFB")*/
+  @HystrixCommand(fallbackMethod = "queryAccountByTokenFB")
   public UserDO queryAccountByToken(String token) {
-    return RestHelper.exec(() -> {
+    /*return RestHelper.exec(() -> {
       String url = RestHelper.formatUrl(userServiceName, "/user/getUserByToken?token=" + token);
       ResponseEntity<RestResponse<UserDO>> responseEntity = rest.get(url,
               new ParameterizedTypeReference<RestResponse<UserDO>>() {
               });
       return responseEntity.getBody();
-    }).getResult();
+    }).getResult();*/
+    String url = RestHelper.formatUrl(userServiceName, "/user/getUserByToken?token=" + token);
+    ResponseEntity<RestResponse<UserDO>> responseEntity = rest.get(url, new ParameterizedTypeReference<RestResponse<UserDO>>() {});
+    RestResponse<UserDO> response = responseEntity.getBody();
+    if (response == null || response.getCode() != 0) {
+      return null;
+    }
+    return response.getResult();
+  }
+
+  /**
+   * <pre>降级方法</pre>
+   *
+   * @param token
+   * @return
+   */
+  public UserDO queryAccountByTokenFB(String token) {
+    return new UserDO();
   }
 }

@@ -114,8 +114,7 @@ public class AccountsAPIController {
       return "redirect:/accounts/signin?target=" + target + "&email=" + email + "&"
               + ResultMsg.errorMsg("用户名或密码错误").asUrlParams();
     } else {
-      HttpSession session = request.getSession(true);
-      session.setAttribute(CommonConstants.USER_ATTRIBUTE, user);
+      UserContext.setUser(user);
       return StringUtils.isNoneBlank(target) ? "redirect:" + target : "redirect:/index";
     }
   }

@@ -136,6 +136,15 @@ public class UserController {
    */
   @GetMapping("getByToken")
   public RestResponse<UserDO> getUserByToken(@RequestParam(name = "token", required = true) String token) {
+    /** 模拟服务断路
+    if(token != null){
+      try {
+        Thread.sleep(10000000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+     **/
     UserDO userInfo = userService.getLoginedUserByToken(token);
     return RestResponse.success(userInfo);
   }
@@ -148,6 +157,15 @@ public class UserController {
    */
   @GetMapping("logout")
   public RestResponse<String> logout(@RequestParam(name = "token") String token) {
+    /** 模拟服务断路
+    if(token != null){
+      try {
+        Thread.sleep(10000000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+     **/
     userService.invalidate(token);
     return RestResponse.success("success");
   }
