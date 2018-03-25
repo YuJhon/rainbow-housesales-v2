@@ -208,7 +208,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.jhon.rain.user.MicroHouseUserApplication</mainClass>
+                    <mainClass>com.jhon.rain.comment.HouseCommentServiceApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

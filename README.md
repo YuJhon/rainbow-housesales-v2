@@ -924,3 +924,68 @@ public class RestAutoConfig {
     ![恢复正常了](./photos/41.恢复正常了.png)
  
 * 更新日期：2018-03-25
+
+
+## 搭建ELK日志平台【使用6.2.3版本】
+* Elasticsearch 9200
+需改配置：
+```xml
+cluster.routing.allocation.disk.threshold_enabled: false
+```
+* Kibana 5601
+默认配置
+
+* Logstash
+    * 配置house-config【[调试网址（需要翻墙）](http://grokdebug.herokuapp.com/)】
+    ```xml
+    input{
+    	file{
+    		path => "E:/IdeaWork/rainbow-house-v2/house-room-service/logs/house*"
+    		sincedb_path => "D:/RAIN-ELK/house-6.2.3/logstash-6.2.3/sincedb_house"
+    		codec => multiline {
+    			pattern => "^%{TIMESTAMP_ISO8601}"
+    			negate => true
+    			what   => "previous"
+    		}
+    	}
+    }
+    filter{
+    	grok {
+    		match => {
+    			"message" => "(?m)%{TIMESTAMP_ISO8601:timestamp}\s+\[%{DATA:thread}\]\s+%{DATA:level}\s+\[%{DATA:class}\]\s+\[%{DATA:trace},%{DATA:span}\]\s+%{DATA:thread}\s+-\s%{DATA:incoming}:\s+%{UUID:reqId}%{GREEDYDATA:msg}"
+    		}
+    	}
+    	
+    	mutate {
+    		"add_field" => {"appname" => "room"}
+    	}
+    }
+    output{
+    	elasticsearch{
+    		hosts => ["localhost:9200"]
+    		index => "house-room-info-%{+YYYY.MM.dd}"
+    	}
+    	stdout {codec => rubydebug}
+    }
+    ```
+    
+    ```xml
+    ./logstash -f house-config
+    ```
+    * 配置截图
+    ![Logstash配置](./photos/56.Logstash配置.png)
+    * 启动
+    ![Logstash启动后控制台信息](./photos/57.Logstash启动后控制台信息.png)
+    
+* 收集日志（应用系统进行操作）
+    * ![搭建ELK来收集日志](./photos/55.搭建ELK来收集日志.png)
+
+    * ![使用面板展示](./photos/58.使用面板展示.png)
+
+    * ![根据Trace来进行分类展示](./photos/59.根据Trace来进行分类展示.png)
+    
+    
+    
+* 更新日期：2018-03-25  项目完结（后期V3版本再重构代码的冗余）
+
+
