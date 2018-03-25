@@ -6,13 +6,13 @@
              <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
             <!-- 输出日志的格式-->
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L]  - %msg%n" charset="UTF-8"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] [%X{X-B3-TraceId},%X{X-B3-SpanId}] - %msg%n" charset="UTF-8"/>
         </Console>
 
         <RollingRandomAccessFile name="FILE-INFO" fileName="logs/house-info.log"
             filePattern="logs/house-comment-info.%d{yyyy-MM-dd-HH}.log">
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] %tcid - %msg%n" charset="UTF-8" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] [%X{X-B3-TraceId},%X{X-B3-SpanId}] %tcid - %msg%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy  interval="1" />
             <DefaultRolloverStrategy max="1"  >
                <Delete basePath="logs" maxDepth="2">
@@ -26,7 +26,7 @@
         <RollingRandomAccessFile name="FILE-DEBUG" fileName="logs/house-debug.log"
             filePattern="logs/house-comment-debug.%d{yyyy-MM-dd-HH}.log">
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}  [%t] %-5level [%logger{50}:%L] %tcid - %msg%n" charset="UTF-8" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}  [%t] %-5level [%logger{50}:%L] [%X{X-B3-TraceId},%X{X-B3-SpanId}] %tcid - %msg%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy  interval="1" />
             <DefaultRolloverStrategy max="1"  >
                <Delete basePath="logs" maxDepth="2">
@@ -39,7 +39,7 @@
         <RollingRandomAccessFile name="FILE-WARN" fileName="logs/house-warn.log"
             filePattern="logs/house-comment-warn.%d{yyyy-MM-dd-HH}.log">
             <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] %tcid - %msg%n" charset="UTF-8" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] [%X{X-B3-TraceId},%X{X-B3-SpanId}] %tcid - %msg%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy  interval="1" />
              <DefaultRolloverStrategy max="1"  >
                <Delete basePath="logs" maxDepth="2">
@@ -52,7 +52,7 @@
         <RollingRandomAccessFile name="FILE-ERROR" fileName="logs/house-error.log"
             filePattern="logs/house-comment-error.%d{yyyy-MM-dd-HH}.log">
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] %tcid - %msg%n" charset="UTF-8" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] [%X{X-B3-TraceId},%X{X-B3-SpanId}] %tcid - %msg%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy  interval="1" />
             <DefaultRolloverStrategy max="1"  >
                <Delete basePath="logs" maxDepth="2">
