@@ -10,10 +10,6 @@
   <name>micro-house</name>
   <url>http://maven.apache.org</url>
 
-  <modules>
-      <module>house-common-core</module>
-  </modules>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
