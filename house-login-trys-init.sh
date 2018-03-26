@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+for((i=1;i<1000;i++));
+ do
+	curl 'http://127.0.0.1:8080/accounts/signin' -H 'Pragma: no-cache' -H 'Origin: http://127.0.0.1:8080' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: zh-CN,zh;q=0.9' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'Cache-Control: no-cache' -H 'Referer: http://127.0.0.1:8080/accounts/signin' -H 'Cookie: JSESSIONID=FAF58A4CAD6812AC2AA98212BE986E5D; token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJob3VzZS11c2VyIiwibmFtZSI6Ikpob25yYWluIiwiZXhwIjoxNTIyMDM0NDIxLCJlbWFpbCI6ImppYW5neTE5QDEyNi5jb20iLCJ0cyI6IjE1MjE5NDgwMjEifQ.oYTEqbgLx3qNtsJ6pfnLTlFLeU9XnSmHBLYachvK7go' -H 'Connection: keep-alive' --data 'email=jiangy19%40126.com&password=jjyy1321&target=' --compressed >/tmp/api-log.txt
+ done
